@@ -1,26 +1,224 @@
 @import "tailwindcss";
 
+/* =========================
+   SR VASTRA THEME
+========================= */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --cream: #fffaf3;
+  --burgundy: #70283f;
+  --rose: #c86f83;
+  --gold: #b99a5b;
+  --ink: #30242a;
+  --muted: #776b68;
+  --border: #eadfd7;
+  --card-bg: #f2e9df;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* =========================
+   GLOBAL STYLES
+========================= */
+
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: #f0d9df;
+  color: var(--burgundy);
+}
+
+/* =========================
+   IMAGE CHANGE ANIMATION
+========================= */
+
+@keyframes imageChange {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =========================
+   SLIDE FROM RIGHT
+========================= */
+
+@keyframes slideFromRight {
+  from {
+    transform: translateX(18px) scale(1.02);
+  }
+
+  to {
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* =========================
+   SLIDE FROM LEFT
+========================= */
+
+@keyframes slideFromLeft {
+  from {
+    transform: translateX(-18px) scale(1.02);
+  }
+
+  to {
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* =========================
+   SLIDER ANIMATION CLASSES
+========================= */
+
+.animate-image-change {
+  animation: imageChange 500ms ease-out both;
+}
+
+.slide-from-right {
+  animation:
+    imageChange 500ms ease-out both,
+    slideFromRight 500ms ease-out both;
+}
+
+.slide-from-left {
+  animation:
+    imageChange 500ms ease-out both,
+    slideFromLeft 500ms ease-out both;
+}
+
+/* =========================
+   PRODUCT IMAGE SLIDERS
+========================= */
+
+.slider-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--card-bg);
+}
+
+.slider-image {
+  display: block;
+  width: 100%;
+  height: 100%; /* was 200% (typo) */
+  object-fit: cover; /* fill the card, no letterboxing */
+  object-position: center;
+}
+
+/* =========================
+   SLIDER NAVIGATION BUTTONS
+========================= */
+
+.slider-button {
+  position: absolute;
+  top: 50%;
+  z-index: 10;
+  display: flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-50%);
+  border: none;
+  border-radius: 50%;
+  background: rgb(255 250 243 / 92%);
+  color: var(--burgundy);
+  box-shadow: 0 2px 8px rgb(48 36 42 / 12%);
+  transition:
+    background-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.slider-button:hover {
+  background: #fff;
+  box-shadow: 0 3px 10px rgb(48 36 42 / 18%);
+}
+
+.slider-button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* =========================
+   SLIDER INDICATORS
+========================= */
+
+.slider-indicators {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.slider-indicator {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: rgb(255 250 243 / 85%);
+  transition:
+    width 250ms ease,
+    background-color 250ms ease;
+}
+
+.slider-indicator.active {
+  width: 24px;
+  background: var(--burgundy);
+}
+
+/* =========================
+   ACCESSIBILITY
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
